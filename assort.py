@@ -84,13 +84,11 @@ def sort(ip_list):
 	global HEADER
 	HEADER = []
 
-	## CHECK- decrease in the number of lists increases 'k' and consequently ln(k).
-	## So is there a improvement or decrease in performance?
-	# heapq.heapify(ip_list)					# In-built heapify function. O(n)
+	heapq.heapify(ip_list)					# In-built heapify function. O(n)
 											# Calling this function is optional.
 											# It helps reduce the number number of lists.
 
-	for ele in ip_list:
+	for ele in ip_list[::-1]:
 		build_bin(ele)						# Call the O(ln(n)) function n times.
 	ip_list[:] = heapq.merge(*HEADER)		# In-built merge function. O(n ln(k)) 
 											# where k is the average number of elements per list
