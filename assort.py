@@ -21,12 +21,12 @@ def build_seq(ele):
 		HEADER.append([ele])				# Create a new list and add it to the header.
 		return
 
-	for l in HEADER:						# l is the current list.
-		if ele <= l[0]:						# ELEMENT smaller than START of current list.
-			l.insert(0, ele)				# Insert ELEMENT to START of current list.
-			return
-		elif ele >= l[-1]:					# ELEMENT greater than END of current list.
+	for l in HEADER:
+		if ele >= l[-1]:					# ELEMENT greater than END of current list.
 			l.append(ele)					# Insert ELEMENT to END of current list.
+			return							# l is the current list.
+		elif ele <= l[0]:						# ELEMENT smaller than START of current list.
+			l.insert(0, ele)				# Insert ELEMENT to START of current list.
 			return
 
 	HEADER.append([ele])					# Doesn't fit in any of the existing lists. So new list.
@@ -48,27 +48,27 @@ def build_bin(ele):
 		mid = (low + high) // 2				# Get index to current list.
 
 		if mid == 0:						# Current list is the first list.
-			if ele <= HEADER[0][0]:
-				HEADER[0].insert(0, ele)	# Insert to START of first list.
-				break
-			elif ele >= HEADER[0][-1]:
+			if ele >= HEADER[0][-1]:
 				HEADER[0].append(ele)		# Insert to END of first list.
+				break
+			elif ele <= HEADER[0][0]:
+				HEADER[0].insert(0, ele)	# Insert to START of first list.
 				break
 			else:
 				low = mid + 1				# Search for correct position towards the right.
-
-		elif ele <= HEADER[mid][0]:			# ELEMENT is lesser than START of current list.
-			if HEADER[mid-1][0] < ele:		# ELEMENT is greater than START of previous list.
-				HEADER[mid].insert(0, ele)	# Insert to START of current list.
-				break
-			else:							# ELEMENT is lesser than START of previous list.
-				high = mid - 1				# Search for correct position towards the left.
 
 		elif ele >= HEADER[mid][-1]:		# ELEMENT is greater than END of current list.
 			if HEADER[mid-1][-1] > ele:		# ELEMENT is lesser than END of previous list.
 				HEADER[mid].append(ele)		# Insert at END of current list.
 				break
 			else:							# ELEMENT is greater than END of previous list.
+				high = mid - 1				# Search for correct position towards the left.
+
+		elif ele <= HEADER[mid][0]:			# ELEMENT is lesser than START of current list.
+			if HEADER[mid-1][0] < ele:		# ELEMENT is greater than START of previous list.
+				HEADER[mid].insert(0, ele)	# Insert to START of current list.
+				break
+			else:							# ELEMENT is lesser than START of previous list.
 				high = mid - 1				# Search for correct position towards the left.
 
 		else:								# START < ELEMENT < END for current list.
